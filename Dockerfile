@@ -58,12 +58,12 @@ RUN --mount=type=cache,target=/root/.cache/pip \
         pip3 install -r requirements.txt
 
 # Expose the FastAPI port
-EXPOSE 5001
+EXPOSE 7860
 
 # Start the FastAPI app using Uvicorn web server
 # CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "14000", "--limit-concurrency", "1000"]
 RUN python3 download.py
 
-CMD ["python3", "infer_server.py", "--host=0.0.0.0", "--port=5001", "--model_path=models/sam2ai/whisper-odia-small-finetune-int8-ct2", "--num_workers=2"]
+CMD ["python3", "infer_server.py", "--host=0.0.0.0", "--port=7860", "--model_path=models/sam2ai/whisper-odia-small-finetune-int8-ct2", "--num_workers=2"]
 
 
