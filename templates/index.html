@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OdiaGenAI Speech Recognition</title>
+    <script type="text/javascript" src="/static/record.js"></script>
+    <link href="/static/index.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="header">
+    <h1>OdiaGenAI Speech Recognition</h1>
+</div>
+<div id="content">
+    <div>
+        <a id="upload" onclick="uploadAudioFile()" class="file">select audio file</a>
+        <a id="play_btn" onclick="uploadRecordAudio()" class="file">predict audio file</a>
+        <audio controls autoplay></audio>
+        <img id="record_btn" onclick="record()" src="/static/record.png" alt="record"/>
+    </div>
+    <div id="result">
+        <label for="result_p"></label><textarea id="result_p"></textarea>
+    </div>
+    <!-- <div id="llm_result">
+        <a id="llm_predict" onclick="uploadAudioFile()" class="file">generate text</a>
+        <label for="result_llm"></label><textarea id="result_llm"></textarea>
+    </div> -->
+</div>
+<script>
+    let is_recording = false;
+    let is_playing = false;
+    let host = location.origin;
+    let recorder;
+    let audio = document.querySelector('audio');
+    let textarea = document.getElementById('result_p')
+
+
+    function record() {
+        if (is_recording) {
+            is_recording = false;
+            stopRecording()
+            document.getElementById('record_btn').src = '/static/record.png'
+            startPlay();
+            stopPlay();
+        } else {
+            is_recording = true;
+            startRecording()
+            document.getElementById('record_btn').src = '/static/recording.gif'
+        }
+    }
+
+    function play() {
+        if (is_playing) {
+            is_playing = false;
+            stopPlay()
+            document.getElementById('play_btn').innerText = 'play audio'
+        } else {
+            is_playing = true;
+            startPlay()
+            document.getElementById('play_btn').innerText = 'Stop play'
+        }
+    }
+
+    function startRecording() {
+        HZRecorder.get(function (rec) {
+            recorder = rec;
+            recorder.start();
+        });
+    }
+
+    function stopRecording() {
+        recorder.stop();
+    }
+
+    function startPlay() {
+        recorder.play(audio);
+    }
+
+    function stopPlay() {
+        audio.pause();
+    }
+
+    function cancelAudio() {
+        recorder.stop();
+        recorder.clear();
+    }
+
+    function uploadRecordAudio() {
+        recorder.upload(location.origin + "/recognition", function (state, e) {
+            switch (state) {
+                case 'uploading':
+                    const percentComplete = Math.round(e.loaded * 100 / e.total) + '%';
+                    console.log(percentComplete);
+                    break;
+                case 'ok':
+                    console.log(e.target.responseText)
+                    document.getElementById('result_p').innerHTML = e.target.responseText
+                    break;
+                case 'error':
+                    alert("upload failed");
+                    break;
+                case 'cancel':
+                    alert("upload canceled");
+                    break;
+            }
+        });
+    }
+
+    // 
+    function uploadAudioFile() {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "audio/*,video/*";
+        input.click();
+        input.onchange = function () {
+            const file = input.files[0];
+            console.log(file)
+            audio.src = window.URL.createObjectURL(file);
+            stopPlay();
+            upload_file(host + "/recognition", file, function (state, e) {
+                switch (state) {
+                    case 'uploading':
+                        const percentComplete = Math.round(e.loaded * 100 / e.total) + '%';
+                        console.log(percentComplete);
+                        break;
+                    case 'ok':
+                        console.log(e.target.responseText)
+                        textarea.innerText = e.target.responseText
+                        break;
+                    case 'error':
+                        alert("upload failed");
+                        break;
+                    case 'cancel':
+                        alert("upload canceled");
+                        break;
+                }
+            });
+        }
+    }
+
+    // 
+    upload_file = function (url, file, callback) {
+        const fd = new FormData();
+        // 
+        fd.append("audio", file);
+        const xhr = new XMLHttpRequest();
+        xhr.timeout = 60000
+        if (callback) {
+            xhr.upload.addEventListener("progress", function (e) {
+                callback('uploading', e);
+            }, false);
+            xhr.addEventListener("load", function (e) {
+                callback('ok', e);
+            }, false);
+            xhr.addEventListener("error", function (e) {
+                callback('error', e);
+            }, false);
+            xhr.addEventListener("abort", function (e) {
+                callback('cancel', e);
+            }, false);
+        }
+        xhr.open("POST", url);
+        xhr.send(fd);
+    }
+</script>
+
+</body>
+</html>
