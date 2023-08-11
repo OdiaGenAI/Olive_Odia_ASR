@@ -63,7 +63,7 @@ def release_model_semaphore():
 
 
 def recognition(file: File, to_simple: int,
-                remove_pun: int, language: str = "ory",
+                remove_pun: int, language: str = "bn",
                 task: str = "transcribe"
     ):
 
@@ -85,7 +85,7 @@ def recognition(file: File, to_simple: int,
 async def api_recognition_stream(
         to_simple: int = Body(1, description="", embed=True),
         remove_pun: int = Body(0, description="", embed=True),
-        language: str = Body("ory", description="", embed=True),
+        language: str = Body("bn", description="", embed=True),
         task: str = Body("transcribe", description="", embed=True),
         audio: UploadFile = File(..., description="")
         ):
@@ -111,7 +111,7 @@ async def api_recognition_stream(
 async def api_recognition(
         to_simple: int = Body(1, description="", embed=True),
         remove_pun: int = Body(0, description="", embed=True),
-        language: str = Body("ory", description="", embed=True),
+        language: str = Body("bn", description="", embed=True),
         task: str = Body("transcribe", description="", embed=True),
         audio: UploadFile = File(..., description="")
         ):
