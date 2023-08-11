@@ -52,7 +52,7 @@ else:
 # 
 # _, _ = model.transcribe("dataset/test.wav", beam_size=5)
 
-app = FastAPI(title="")
+app = FastAPI(title="OdiaGenAI Whisper ASR")
 app.mount('/static', StaticFiles(directory='static'), name='static')
 templates = Jinja2Templates(directory="templates")
 model_semaphore = None
