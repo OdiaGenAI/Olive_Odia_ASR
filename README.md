@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="url"><img src="https://github.com/OdiaGenAI/Olive_Odia_Whisper/blob/main/odiagen_asr.jpg" height="auto" width="200" style="border-radius:100%"></a>
+  <a href="url"><img src="https://github.com/OdiaGenAI/Olive_Odia_ASR/blob/main/odiagen_asr-modified.png" height="auto" width="200" style="border-radius:100%"></a>
 </p>
 
 
