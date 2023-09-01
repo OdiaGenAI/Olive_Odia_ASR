@@ -112,6 +112,8 @@ Example:
 
 To make it easier to understand, here is the Python code to call the Web interface. Here is how to call `/recognition`.
 
+API URL : https://odiagenai-olive-whisper-asr.hf.space
+
 ```python
 import requests
 
@@ -146,4 +148,26 @@ The home page `http://127.0.0.1:5000/` looks like this:
 
 Document page `http://127.0.0.1:5000/docs` page is as follows:
 
+
+```
+@misc{OdiaGenAI,
+  author = { Sambit Sekhar and Shantipriya Parida },
+  title = {OdiaGenAI: Odia ASR },
+  year = {2023},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  howpublished = {\url{https://github.com/sam-ai}},
+}
+```
+
+## License
+
+This work is licensed under a
+[Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License][cc-by-nc-sa].
+
+[![CC BY-NC-SA 4.0][cc-by-nc-sa-image]][cc-by-nc-sa]
+
+[cc-by-nc-sa]: http://creativecommons.org/licenses/by-nc-sa/4.0/
+[cc-by-nc-sa-image]: https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png
+[cc-by-nc-sa-shield]: https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg
 
