@@ -80,10 +80,10 @@ Currently, there are two available interfaces: the standard recognition interfac
 |   Field    | Need |  type  |  Default   |                                  Explain                                  |
 |:----------:|:----:|:------:|:----------:|:-------------------------------------------------------------------------:|
 |   audio    | Yes  |  File  |            |                                Audio File                                 |
-| to_simple  |  No  |  int   |     1      |                 Traditional Chinese to Simplified Chinese                 |
+| to_simple  |  No  |  int   |     1      |                 Traditional Odia to Simplified Odia                 |
 | remove_pun |  No  |  int   |     0      |                       Whether to remove punctuation                       |
 |    task    |  No  | String | transcribe |         Identify task types and support transcribe and translate          |
-|  language  |  No  | String |     zh     | Set the language, shorthand, to automatically detect the language if None |
+|  language  |  No  | String |     or     | Set the language, shorthand, to automatically detect the language if None |
 
 Return result:
 
